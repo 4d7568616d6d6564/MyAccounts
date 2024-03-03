@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pinNumpadGrid"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top|center_horizontal"
+    android:columnCount="3"
+    android:orientation="horizontal"
+    android:rowCount="4"
+    app:layout_anchorGravity="center"
+    tools:ignore="HardcodedText">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn1"
+        style="@style/PinButtonStyle"
+        android:text="1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn2"
+        style="@style/PinButtonStyle"
+        android:text="2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn3"
+        style="@style/PinButtonStyle"
+        android:text="3" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn4"
+        style="@style/PinButtonStyle"
+        android:text="4" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn5"
+        style="@style/PinButtonStyle"
+        android:text="5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn6"
+        style="@style/PinButtonStyle"
+        android:text="6" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn7"
+        style="@style/PinButtonStyle"
+        android:text="7" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn8"
+        style="@style/PinButtonStyle"
+        android:text="8" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn9"
+        style="@style/PinButtonStyle"
+        android:text="9" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDisable"
+        style="@style/PinButtonStyle"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="invisible" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn0"
+        style="@style/PinButtonStyle"
+        android:text="0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnClear"
+        style="@style/PinButtonStyle"
+        app:icon="@drawable/ic_ui_undo"
+        app:iconSize="@dimen/_24sdp" />
+
+</GridLayout>

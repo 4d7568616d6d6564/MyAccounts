@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_3sdp"
+    android:layout_marginBottom="@dimen/_3sdp"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingStart="@dimen/_6sdp"
+    android:paddingTop="@dimen/_6sdp"
+    android:paddingEnd="@dimen/_6sdp"
+    android:paddingBottom="@dimen/_6sdp"
+    app:cardBackgroundColor="@color/main_item_bg"
+    app:cardCornerRadius="@dimen/_9sdp"
+    app:strokeColor="@color/app_surface_container_high"
+    app:strokeWidth="@dimen/_1sdp"
+    tools:ignore="UnusedAttribute">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/_6sdp"
+            android:background="@drawable/image_view_bg"
+            android:contentDescription="@string/account_image"
+            android:padding="@dimen/_6sdp" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_toEndOf="@id/imageView"
+            android:ellipsize="end"
+            android:fontFamily="@font/gilroy_bold"
+            android:gravity="center"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:singleLine="true"
+            android:textColor="@color/app_on_primary"
+            android:textSize="@dimen/_16ssp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/textDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textTitle"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@id/imageView"
+            android:ellipsize="end"
+            android:fontFamily="@font/gilroy_regular"
+            android:gravity="center"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:padding="@dimen/_3sdp"
+            android:singleLine="true"
+            android:textColor="@color/app_on_primary"
+            android:textSize="@dimen/_14ssp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/textPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textDesc"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@id/imageView"
+            android:ellipsize="end"
+            android:fontFamily="@font/gilroy_bold"
+            android:gravity="start"
+            android:letterSpacing="0.2"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_3sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_3sdp"
+            android:singleLine="true"
+            android:textColor="@color/app_on_primary_variant"
+            android:textSize="@dimen/_20ssp"
+            android:visibility="invisible"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

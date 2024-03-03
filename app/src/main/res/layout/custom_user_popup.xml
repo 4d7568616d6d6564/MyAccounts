@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_154sdp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_rectangle_variant"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_6sdp"
+    android:paddingBottom="@dimen/_6sdp">
+
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/themeSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/SwitchTheme"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:fontFamily="@font/gilroy_regular"
+        android:checked="true"
+        android:padding="@dimen/_9sdp"
+        android:text="@string/light_theme"
+        android:textColor="@color/dialog_on_container"
+        android:textSize="@dimen/_13ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/deleteAllData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/gilroy_regular"
+        android:foreground="@drawable/ripple_effect_rectangle_v12sdp"
+        android:padding="@dimen/_9sdp"
+        android:text="@string/delete_all_data"
+        android:textColor="@color/dialog_on_container"
+        android:textSize="@dimen/_13ssp"
+        android:textStyle="bold" />
+
+</LinearLayout>

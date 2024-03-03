@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LauncherTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/avd_anim_2401</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/avd_anim_2401</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="splashScreenIconSize">288dp</item>
+        <item name="colorPrimary">@color/app_primary</item>
+        <item name="colorPrimaryDark">@color/app_primary</item>
+        <item name="colorOnBackground">@color/app_primary</item>
+        <item name="android:windowBackground">@color/app_primary</item>
+        <item name="android:colorBackground">@color/app_primary</item>
+        <item name="android:statusBarColor">@color/app_primary</item>
+        <item name="android:navigationBarColor">@color/app_primary</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="windowSplashScreenIconBackgroundColor">@android:color/white</item>
+    </style>
+</resources>

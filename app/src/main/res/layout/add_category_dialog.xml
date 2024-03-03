@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="UnusedAttribute,ContentDescription">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_9sdp"
+        android:background="@drawable/rounded_rectangle"
+        android:gravity="center"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:autoSizeTextType="uniform"
+            android:clickable="false"
+            android:focusable="false"
+            android:fontFamily="@font/gilroy_bold"
+            android:gravity="center"
+            android:text="@string/add_new_category"
+            android:textColor="@color/dialog_on_container"
+            android:textSize="@dimen/_18ssp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/categoryLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textColorHint="@color/app_input_hint"
+            app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+            app:boxCornerRadiusTopStart="@dimen/_12sdp"
+            app:boxStrokeColor="@color/input_stroke"
+            app:boxStrokeErrorColor="@color/app_input_error"
+            app:boxStrokeWidth="@dimen/_1sdp"
+            app:counterEnabled="true"
+            app:counterMaxLength="36"
+            app:cursorErrorColor="@color/app_input_error"
+            app:errorTextColor="@color/app_input_error"
+            app:hintTextColor="@color/app_input_hint"
+            app:startIconDrawable="@drawable/ic_ui_tag">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/categoryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gilroy_regular"
+                android:gravity="center_vertical"
+                android:hint="@string/category"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:textColor="@color/app_input_text"
+                android:textColorHint="@color/app_input_hint"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold"
+                android:theme="@style/CustomEditText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categoryLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/gilroy_regular"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/dialog_button_text"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/dialog_button_background"
+            tools:ignore="MissingConstraints,UnusedAttribute,TouchTargetSizeCheck" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_primary">#000000</color>
+    <color name="app_primary_accent">#167fd4</color>
+
+    <color name="app_primary_tint">#858585</color>
+
+    <color name="app_on_primary">#e3e3e3</color>
+    <color name="app_on_primary_variant">#c7c7c7</color>
+
+    <color name="app_surface">@color/app_primary</color>
+    <color name="app_on_surface">#cccccc</color>
+
+    <color name="app_secondary_container">#124d7d</color>
+    <color name="app_secondary_container_tint">@color/app_primary</color>
+    <color name="app_on_secondary_container">#d1d1d1</color>
+
+    <color name="app_input_hint">#b1bfc8</color>
+    <color name="app_input_text">#e1e1e5</color>
+    <color name="app_input_error">#f20d0d</color>
+    <color name="app_input_stroke">@color/app_primary_accent</color>
+    <color name="app_input_stroke_default">#bababa</color>
+
+    <color name="app_icon_tint">#cdd1d5</color>
+
+    <color name="app_surface_container_low">#0f0f0f</color>
+    <color name="app_surface_container_high">#1a1a1a</color>
+    <color name="main_item_bg">#080808</color>
+
+    <color name="category_selected">#124d7d</color>
+    <color name="category_unselected">@color/app_surface_container_low</color>
+    <color name="category_selected_text">@color/app_primary</color>
+    <color name="category_unselected_text">#ffffff</color>
+
+    <color name="gender_button_unselected_text">@color/app_on_primary</color>
+    <color name="gender_button_selected_text">@color/app_primary</color>
+    <color name="gender_button_stroke">@color/app_on_primary_variant</color>
+
+    <color name="indicator_empty">#828282</color>
+    <color name="indicator_filled">#a1a1a1</color>
+
+    <color name="dialog_container">#1D1D1D</color>
+    <color name="dialog_container_variant">#212121</color>
+    <color name="dialog_container_stroke">@color/app_surface_container_low</color>
+    <color name="dialog_on_container">@color/app_on_primary</color>
+    <color name="dialog_on_container_variant">#c2c2c2</color>
+    <color name="dialog_on_container_urgent">@color/app_input_error</color>
+    <color name="dialog_button_text">@color/app_primary</color>
+    <color name="dialog_button_background">@color/app_primary_accent</color>
+    <color name="dialog_button_text_variant">#171717</color>
+
+
+    <color name="pin_stroke">#b8b8b8</color>
+    <color name="pin_ripple">#124d7d</color>
+    <color name="pin_background">@color/app_primary_accent</color>
+    <color name="pin_text">@color/app_primary_accent</color>
+
+    <color name="calendar_on_surface">#c7c7c7</color>
+
+    <color name="item_selected_stroke">@color/app_primary_accent</color>
+    <color name="item_selected_background">@color/app_primary_accent</color>
+
+    <color name="app_button_female">#52157a</color>
+    <color name="app_button_male">#3b8ece</color>
+
+    <color name="ripple">#994a4a4a</color>
+    <color name="transparent">#00000000</color>
+
+</resources>
