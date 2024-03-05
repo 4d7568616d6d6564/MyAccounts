@@ -214,7 +214,7 @@ class AccountAdapter(
         }
 
 
-        val recyclerView = popupView.findViewById<RecyclerView>(R.id.recyclerView)
+        val recyclerView = popupView.findViewById<RecyclerView>(R.id.main_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

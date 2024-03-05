@@ -35,7 +35,7 @@
             android:textSize="@dimen/_18ssp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/categoryLayout"
+            android:id="@+id/category_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/categoryLayout"
+            android:layout_below="@id/category_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_28sdp"
             android:layout_marginBottom="@dimen/_16sdp"

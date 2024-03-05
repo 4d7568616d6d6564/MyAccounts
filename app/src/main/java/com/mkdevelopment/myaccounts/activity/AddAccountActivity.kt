@@ -418,7 +418,7 @@ class AddAccountActivity : AppCompatActivity() {
             addCategoryDialog?.setCancelable(true)
             val saveButton = addCategoryDialog?.findViewById<MaterialButton>(R.id.saveButton)
             val categoryLayout =
-                addCategoryDialog?.findViewById<TextInputLayout>(R.id.categoryLayout)
+                addCategoryDialog?.findViewById<TextInputLayout>(R.id.category_layout)
             val categoryEditText =
                 addCategoryDialog?.findViewById<TextInputEditText>(R.id.categoryEditText)
 
@@ -503,8 +503,7 @@ class AddAccountActivity : AppCompatActivity() {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     selectedCategoryPosition = lastInsertedID.toInt()
-                                    binding.categoryAutoComplete.text =
-                                        Editable.Factory.getInstance().newEditable(getCategory)
+                                    binding.categoryAutoComplete.setText(getCategory)
                                 }
                                 addCategoryDialog?.dismiss()
                             }

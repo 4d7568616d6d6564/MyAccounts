@@ -102,11 +102,11 @@ class MainActivity : AppCompatActivity() {
         accountAdapter = AccountAdapter(this, accountDataViewModel)
         val screenWidth = resources.displayMetrics.widthPixels
 
-        binding.recyclerView.adapter = accountAdapter
-        binding.recyclerView.layoutManager =
+        binding.mainRecyclerView.adapter = accountAdapter
+        binding.mainRecyclerView.layoutManager =
             LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
 
-        binding.floatingActionButton.setOnClickListener {
+        binding.fabAddAccount.setOnClickListener {
             val intent = Intent(this@MainActivity, AddAccountActivity::class.java)
             val options = ActivityOptions.makeCustomAnimation(
                 this@MainActivity,
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent, options.toBundle())
         }
 
-        binding.filter.setOnClickListener {
+        binding.filterIcon.setOnClickListener {
             val popupView = layoutInflater.inflate(R.layout.custom_popup, null)
             val popupWindow = PopupWindow(
                 popupView,
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
 
             popupWindow.elevation = resources.getDimension(R.dimen._3sdp)
             popupWindow.showAsDropDown(
-                binding.filter,
+                binding.filterIcon,
                 0,
                 resources.getDimension(R.dimen._6sdp).toInt()
             )
@@ -138,9 +138,9 @@ class MainActivity : AppCompatActivity() {
                 getString(R.string.getAllDataByTextASC),
                 getString(R.string.getAllDataByTextDESC)
             )
-            val recyclerView = popupView.findViewById<RecyclerView>(R.id.recyclerView)
-            recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            val mainRecyclerView = popupView.findViewById<RecyclerView>(R.id.main_recycler_view)
+            mainRecyclerView.layoutManager = LinearLayoutManager(this)
+            mainRecyclerView.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 override fun onCreateViewHolder(
                     parent: ViewGroup,
                     viewType: Int
@@ -200,7 +200,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.userImage.setOnClickListener {
+        binding.userIcon.setOnClickListener {
             val popupView = layoutInflater.inflate(R.layout.custom_user_popup, null)
             val popupWindow = PopupWindow(
                 popupView,
@@ -213,11 +213,11 @@ class MainActivity : AppCompatActivity() {
             val marginOffset = resources.getDimension(R.dimen._6sdp).toInt()
 
             val location = IntArray(2)
-            binding.userImage.getLocationOnScreen(location)
-            val x = location[0] + binding.userImage.width - popupWindow.width
-            val y = location[1] + binding.userImage.height + popupWindow.height + marginOffset
+            binding.userIcon.getLocationOnScreen(location)
+            val x = location[0] + binding.userIcon.width - popupWindow.width
+            val y = location[1] + binding.userIcon.height + popupWindow.height + marginOffset
 
-            popupWindow.showAtLocation(binding.userImage, Gravity.START or Gravity.TOP, x, y)
+            popupWindow.showAtLocation(binding.userIcon, Gravity.START or Gravity.TOP, x, y)
 
 
             val themeSwitch = popupView.findViewById<MaterialSwitch>(R.id.themeSwitch)
@@ -253,7 +253,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.searchBarVoiceIcon.setOnClickListener { promptSpeechInput() }
 
-        binding.searchBarEdittext.addTextChangedListener(object : TextWatcher {
+        binding.searchBarEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -261,29 +261,27 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val searchText = s.toString()
                 if (searchText.isNotEmpty()) {
-                    binding.floatingActionButton.hide()
+                    binding.fabAddAccount.hide()
                     binding.categoryLayout.visibility = View.GONE
                 } else {
-                    binding.floatingActionButton.show()
-                    if (categoryList.isNotEmpty()) {
-                        binding.categoryLayout.visibility = View.VISIBLE
-                    }
+                    binding.fabAddAccount.show()
+                    binding.categoryLayout.visibility = View.VISIBLE
                 }
 
                 accountDataViewModel.searchDatabase(searchText).observe(this@MainActivity) { data ->
                     if (data.isEmpty()) {
-                        binding.emptyDataTextView.text = if (selectedCategoryId == 0) {
+                        binding.emptyDataText.text = if (selectedCategoryId == 0) {
                             getString(R.string.no_saved_account)
                         } else {
                             getString(R.string.no_saved_account_category)
                         }
-                        binding.emptyDataImageView.visibility = View.VISIBLE
-                        binding.emptyDataTextView.visibility = View.VISIBLE
-                        binding.recyclerView.visibility = View.GONE
+                        binding.emptyDataIcon.visibility = View.VISIBLE
+                        binding.emptyDataText.visibility = View.VISIBLE
+                        binding.mainRecyclerView.visibility = View.GONE
                     } else {
-                        binding.emptyDataImageView.visibility = View.GONE
-                        binding.emptyDataTextView.visibility = View.GONE
-                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.emptyDataIcon.visibility = View.GONE
+                        binding.emptyDataText.visibility = View.GONE
+                        binding.mainRecyclerView.visibility = View.VISIBLE
                         accountAdapter.setDataList(data)
                     }
                 }
@@ -298,11 +296,11 @@ class MainActivity : AppCompatActivity() {
         accountDataViewModel.getTotalAccountCount().observe(this@MainActivity) { totalCount ->
             if (totalCount != null && totalCount > 0) {
                 binding.searchLayout.visibility = View.VISIBLE
-                binding.recyclerView.visibility = View.VISIBLE
+                binding.mainRecyclerView.visibility = View.VISIBLE
                 binding.categoryLayout.visibility = View.VISIBLE
             } else {
                 binding.searchLayout.visibility = View.GONE
-                binding.recyclerView.visibility = View.GONE
+                binding.mainRecyclerView.visibility = View.GONE
                 binding.categoryLayout.visibility = View.GONE
             }
         }
@@ -405,7 +403,7 @@ class MainActivity : AppCompatActivity() {
                 val data: Intent? = result.data
                 if (data != null) {
                     val speechResults = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    binding.searchBarEdittext.setText(speechResults?.get(0)?.lowercase() ?: "")
+                    binding.searchBarEditText.setText(speechResults?.get(0)?.lowercase() ?: "")
                 }
             }
         }
@@ -434,10 +432,10 @@ class MainActivity : AppCompatActivity() {
                     .observe(this@MainActivity) { data ->
                         if (data.isEmpty()) {
                             if (selectedCategoryId == 0) {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account)
                             } else {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account_category)
                             }
                             loadDataView(true)
@@ -453,10 +451,10 @@ class MainActivity : AppCompatActivity() {
                     .observe(this@MainActivity) { data ->
                         if (data.isEmpty()) {
                             if (selectedCategoryId == 0) {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account)
                             } else {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account_category)
                             }
                             loadDataView(true)
@@ -472,10 +470,10 @@ class MainActivity : AppCompatActivity() {
                     .observe(this@MainActivity) { data ->
                         if (data.isEmpty()) {
                             if (selectedCategoryId == 0) {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account)
                             } else {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account_category)
                             }
                             loadDataView(true)
@@ -491,10 +489,10 @@ class MainActivity : AppCompatActivity() {
                     .observe(this@MainActivity) { data ->
                         if (data.isEmpty()) {
                             if (selectedCategoryId == 0) {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account)
                             } else {
-                                binding.emptyDataTextView.text =
+                                binding.emptyDataText.text =
                                     getString(R.string.no_saved_account_category)
                             }
                             loadDataView(true)
@@ -509,13 +507,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadDataView(isEmptyData: Boolean) {
         if (isEmptyData) {
-            binding.emptyDataImageView.visibility = View.VISIBLE
-            binding.emptyDataTextView.visibility = View.VISIBLE
-            binding.recyclerView.visibility = View.GONE
+            binding.emptyDataIcon.visibility = View.VISIBLE
+            binding.emptyDataText.visibility = View.VISIBLE
+            binding.mainRecyclerView.visibility = View.GONE
         } else {
-            binding.emptyDataImageView.visibility = View.GONE
-            binding.emptyDataTextView.visibility = View.GONE
-            binding.recyclerView.visibility = View.VISIBLE
+            binding.emptyDataIcon.visibility = View.GONE
+            binding.emptyDataText.visibility = View.GONE
+            binding.mainRecyclerView.visibility = View.VISIBLE
         }
     }
 }
