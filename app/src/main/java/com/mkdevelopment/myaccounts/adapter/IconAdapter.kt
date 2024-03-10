@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mkdevelopment.myaccounts.R
 import com.mkdevelopment.myaccounts.databinding.IconItemBinding
 
-class IconAdapter(private val onItemClickListener: (Int) -> Unit) : RecyclerView.Adapter<IconAdapter.IconViewHolder>() {
+class IconAdapter(private val layoutManager: RecyclerView.LayoutManager,private val onItemClickListener: (Int) -> Unit) :
+    RecyclerView.Adapter<IconAdapter.IconViewHolder>() {
     private var dataList = emptyList<Int>()
     private var selectedPosition: Int = 0
 
@@ -52,6 +53,12 @@ class IconAdapter(private val onItemClickListener: (Int) -> Unit) : RecyclerView
     @SuppressLint("NotifyDataSetChanged")
     fun setDataList(iconList: List<Int>) {
         dataList = iconList
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setPosition(position: Int){
+        selectedPosition = position
+        layoutManager.scrollToPosition(selectedPosition)
         notifyDataSetChanged()
     }
 

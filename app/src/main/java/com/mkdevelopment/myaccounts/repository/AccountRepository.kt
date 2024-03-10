@@ -5,6 +5,10 @@ import com.mkdevelopment.myaccounts.database.AccountDao
 import com.mkdevelopment.myaccounts.database.AccountEntity
 
 class AccountRepository(private val accountDao: AccountDao) {
+    fun getDataByID(accountId: Int): LiveData<AccountEntity> {
+        return accountDao.getDataById(accountId)
+    }
+
     fun getAllDataByIdASC(selectedCategoryId: Int): LiveData<List<AccountEntity>> {
         return accountDao.getAllDataByIdASC(selectedCategoryId)
     }
@@ -27,6 +31,10 @@ class AccountRepository(private val accountDao: AccountDao) {
 
     suspend fun insertData(accountEntity: AccountEntity) {
         accountDao.insertData(accountEntity)
+    }
+
+    suspend fun updateData(accountEntity: AccountEntity) {
+        accountDao.updateData(accountEntity)
     }
 
     suspend fun deleteData(accountEntity: AccountEntity) {

@@ -14,6 +14,10 @@ class AccountDataViewModel(application: Application) : AndroidViewModel(applicat
     private val accountDao = AccountsDatabase.getDatabase(application).accountDao()
     private val repository: AccountRepository = AccountRepository(accountDao)
 
+    fun getDataByID(accountId: Int): LiveData<AccountEntity> {
+        return accountDao.getDataById(accountId)
+    }
+
     fun getAllDataByIdASC(selectedCategoryId: Int): LiveData<List<AccountEntity>> {
         return repository.getAllDataByIdASC(selectedCategoryId)
     }
@@ -37,6 +41,12 @@ class AccountDataViewModel(application: Application) : AndroidViewModel(applicat
     fun insertData(accountEntity: AccountEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertData(accountEntity)
+        }
+    }
+
+    fun updateData(accountEntity: AccountEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateData(accountEntity)
         }
     }
 

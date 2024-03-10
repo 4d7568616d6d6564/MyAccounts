@@ -25,6 +25,6 @@ data class AccountEntity(
     val other: String = "",
     val addedTime: String = "",
     val updatedTime: String = "",
-    val icon: Int = -1,
+    val iconPosition: Int = -1,
 
     )

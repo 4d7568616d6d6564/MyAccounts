@@ -15,7 +15,8 @@
             android:name=".activity.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/LauncherTheme">
+            android:theme="@style/LauncherTheme"
+            tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,7 +27,8 @@
             android:name=".activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustPan">
+            android:windowSoftInputMode="adjustResize|adjustPan"
+            tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -38,6 +40,15 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AddAccountTheme"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".activity.EditAccountActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AddAccountTheme"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            tools:ignore="DiscouragedApi" />
     </application>
 </manifest>

@@ -38,6 +38,7 @@
     <string name="warning_category">Please write category name</string>
     <string name="warning_exist_category">This category already exists</string>
     <string name="added_successfully">Added successfully</string>
+    <string name="edited_successfully">Edited successfully</string>
     <string name="warning_title">Please write a title</string>
     <string name="getAllDataByIdASC">Sorting Oldest to Newest</string>
     <string name="getAllDataByIdDESC">Sort Newest to Oldest</string>
@@ -81,6 +82,7 @@
     <string name="other_informations_copy_message">Other Informations copied successfully</string>
     <string name="delete_account">Delete the Account!</string>
     <string name="delete_account_desc">The selected account will be deleted. Do you want to proceed?</string>
+    <string name="edit_account">Edit Account</string>
     <string name="delete_category">Delete the Category!</string>
     <string name="delete_category_desc">The selected category will be deleted. Do you want to proceed?</string>
     <string name="delete_all_data">Delete All Data!</string>

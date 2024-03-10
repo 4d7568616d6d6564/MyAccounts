@@ -38,6 +38,7 @@
     <string name="warning_category">Lütfen kategori adını yazın</string>
     <string name="warning_exist_category">Bu kategori zaten mevcut</string>
     <string name="added_successfully">Başarıyla eklendi</string>
+    <string name="edited_successfully">Başarıyla düzenlendi</string>
     <string name="warning_title">Lütfen bir başlık yazın</string>
     <string name="getAllDataByIdASC">Eskiden Yeniye Sıralama</string>
     <string name="getAllDataByIdDESC">Yeniden Eskiye Sıralama</string>
@@ -78,6 +79,7 @@
     <string name="address_copy_message">Adres başarıyla kopyalandı</string>
     <string name="other_informations_copy_message">Diğer bilgiler başarıyla kopyalandı</string>
     <string name="delete_account">Hesabı Sil!</string>
+    <string name="edit_account">Hesabı Düzenle</string>
     <string name="delete_account_desc">Seçilen hesap silinecek. Devam etmek istiyor musunuz?</string>
     <string name="delete_category">Kategoriyi Sil!</string>
     <string name="delete_category_desc">Seçilen kategori silinecek. Devam etmek istiyor musunuz?</string>

@@ -7,6 +7,7 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -15,7 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
@@ -25,7 +28,7 @@ import com.mkdevelopment.myaccounts.adapter.IconAdapter
 import com.mkdevelopment.myaccounts.common.IconHelper
 import com.mkdevelopment.myaccounts.database.AccountEntity
 import com.mkdevelopment.myaccounts.database.CategoryEntity
-import com.mkdevelopment.myaccounts.databinding.ActivityAddAccountBinding
+import com.mkdevelopment.myaccounts.databinding.ActivityEditAccountBinding
 import com.mkdevelopment.myaccounts.utils.ShakeAnimatorHelper
 import com.mkdevelopment.myaccounts.utils.SharedPreferencesHelper
 import com.mkdevelopment.myaccounts.viewmodel.AccountDataViewModel
@@ -40,8 +43,8 @@ import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 
-class AddAccountActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAddAccountBinding
+class EditAccountActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityEditAccountBinding
     private val accountDataViewModel: AccountDataViewModel by viewModels()
     private val categoryDataViewModel: CategoryDataViewModel by viewModels()
     private var isPasswordVisible = true
@@ -56,12 +59,17 @@ class AddAccountActivity : AppCompatActivity() {
     private val drawableList: MutableList<Int> = mutableListOf()
     private val categoryList: MutableList<String> = mutableListOf()
     private val categoryIdList: MutableList<Int> = mutableListOf()
-
+    private var accountId: Int = -1
+    private var addedTime: String = ""
+    private lateinit var iconAdapter: IconAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddAccountBinding.inflate(layoutInflater)
+        binding = ActivityEditAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        accountId = intent.getIntExtra("account_id", -1)
+
+
         binding.backButton.setOnClickListener { finish() }
 
         binding.saveButton.setOnClickListener {
@@ -102,8 +110,11 @@ class AddAccountActivity : AppCompatActivity() {
             binding.saveButton.isEnabled = false
             binding.saveButton.isFocusable = false
             binding.saveButton.isClickable = false
-            accountDataViewModel.insertData(
+
+
+            accountDataViewModel.updateData(
                 AccountEntity(
+                    id = accountId,
                     categoryId = selectedCategoryPosition,
                     title = binding.titleEditText.text.toString(),
                     name = binding.nameEditText.text.toString(),
@@ -120,15 +131,15 @@ class AddAccountActivity : AppCompatActivity() {
                     securityQuestionAnswer = binding.securityQuestionAnswerEditText.text.toString(),
                     address = binding.addressEditText.text.toString(),
                     other = binding.otherEditText.text.toString(),
-                    addedTime = System.currentTimeMillis().toString(),
-                    updatedTime = "",
+                    addedTime = addedTime,
+                    updatedTime = System.currentTimeMillis().toString(),
                     iconPosition = selectedIconPosition,
                 )
             )
             runOnUiThread {
                 Toast.makeText(
                     applicationContext,
-                    getString(R.string.added_successfully),
+                    getString(R.string.edited_successfully),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -140,15 +151,17 @@ class AddAccountActivity : AppCompatActivity() {
     private fun initialize() {
         getDateFormatPattern = SharedPreferencesHelper(this).getDateFormatPattern()
         drawableList.addAll(IconHelper.iconList)
-        binding.iconRecyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(this@AddAccountActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = IconAdapter(layoutManager as LinearLayoutManager) { selected ->
+
+        binding.iconRecyclerView.layoutManager =
+            LinearLayoutManager(this@EditAccountActivity, LinearLayoutManager.HORIZONTAL, false)
+        iconAdapter =
+            IconAdapter(binding.iconRecyclerView.layoutManager as LinearLayoutManager) { selected ->
                 selectedIconPosition = selected
             }.apply {
                 setDataList(drawableList)
             }
-        }
+        binding.iconRecyclerView.adapter = iconAdapter
+
         binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
             if (scrollY == 0) {
                 binding.headerLayout.elevation = 0f
@@ -166,7 +179,7 @@ class AddAccountActivity : AppCompatActivity() {
         })
 
 
-        categoryDataViewModel.getAllDataByIdASC.observe(this@AddAccountActivity) { data ->
+        categoryDataViewModel.getAllDataByIdASC.observe(this@EditAccountActivity) { data ->
             categoryList.clear()
             categoryIdList.clear()
             categoryList.add(getString(R.string.all_items))
@@ -179,7 +192,7 @@ class AddAccountActivity : AppCompatActivity() {
             }
             binding.categoryAutoComplete.setAdapter(
                 ArrayAdapter(
-                    this@AddAccountActivity,
+                    this@EditAccountActivity,
                     android.R.layout.simple_dropdown_item_1line,
                     categoryList
                 )
@@ -198,19 +211,19 @@ class AddAccountActivity : AppCompatActivity() {
 
 
         val gilroyRegularTypeface =
-            ResourcesCompat.getFont(this@AddAccountActivity, R.font.gilroy_regular)
+            ResourcesCompat.getFont(this@EditAccountActivity, R.font.gilroy_regular)
         val gilroyBoldTypeface =
-            ResourcesCompat.getFont(this@AddAccountActivity, R.font.gilroy_bold)
+            ResourcesCompat.getFont(this@EditAccountActivity, R.font.gilroy_bold)
 
         binding.female.setOnClickListener {
             selectedGender = "female"
             binding.female.typeface = gilroyBoldTypeface
             binding.female.setStrokeColorResource(R.color.app_button_female)
             binding.female.backgroundTintList =
-                ContextCompat.getColorStateList(this@AddAccountActivity, R.color.app_button_female)
+                ContextCompat.getColorStateList(this@EditAccountActivity, R.color.app_button_female)
             binding.female.setTextColor(
                 ContextCompat.getColor(
-                    this@AddAccountActivity,
+                    this@EditAccountActivity,
                     R.color.gender_button_selected_text
                 )
             )
@@ -218,10 +231,10 @@ class AddAccountActivity : AppCompatActivity() {
             binding.male.typeface = gilroyRegularTypeface
             binding.male.setStrokeColorResource(R.color.gender_button_stroke)
             binding.male.backgroundTintList =
-                ContextCompat.getColorStateList(this@AddAccountActivity, R.color.transparent)
+                ContextCompat.getColorStateList(this@EditAccountActivity, R.color.transparent)
             binding.male.setTextColor(
                 ContextCompat.getColor(
-                    this@AddAccountActivity,
+                    this@EditAccountActivity,
                     R.color.gender_button_unselected_text
                 )
             )
@@ -233,10 +246,10 @@ class AddAccountActivity : AppCompatActivity() {
             binding.male.typeface = gilroyBoldTypeface
             binding.male.setStrokeColorResource(R.color.app_button_male)
             binding.male.backgroundTintList =
-                ContextCompat.getColorStateList(this@AddAccountActivity, R.color.app_button_male)
+                ContextCompat.getColorStateList(this@EditAccountActivity, R.color.app_button_male)
             binding.male.setTextColor(
                 ContextCompat.getColor(
-                    this@AddAccountActivity,
+                    this@EditAccountActivity,
                     R.color.gender_button_selected_text
                 )
             )
@@ -244,10 +257,10 @@ class AddAccountActivity : AppCompatActivity() {
             binding.female.typeface = gilroyRegularTypeface
             binding.female.setStrokeColorResource(R.color.gender_button_stroke)
             binding.female.backgroundTintList =
-                ContextCompat.getColorStateList(this@AddAccountActivity, R.color.transparent)
+                ContextCompat.getColorStateList(this@EditAccountActivity, R.color.transparent)
             binding.female.setTextColor(
                 ContextCompat.getColor(
-                    this@AddAccountActivity,
+                    this@EditAccountActivity,
                     R.color.gender_button_unselected_text
                 )
             )
@@ -260,7 +273,6 @@ class AddAccountActivity : AppCompatActivity() {
             } else {
                 if (!isDatePickerShown) {
                     isDatePickerShown = true
-
                     val datePicker =
                         MaterialDatePicker.Builder.datePicker()
                             .setTitleText(getString(R.string.birthday))
@@ -320,11 +332,42 @@ class AddAccountActivity : AppCompatActivity() {
             }
             binding.passwordEditText.setSelection(selectionStart, selectionEnd)
         }
+
+        accountDataViewModel.getDataByID(accountId).observe(this) { data ->
+            addedTime = data.addedTime
+            selectedCategoryPosition = data.categoryId
+            selectedIconPosition = data.iconPosition
+            selectedGender = data.gender
+            runOnUiThread {
+                if (data.gender == "male") {
+                    binding.male.performClick()
+                } else {
+                    binding.female.performClick()
+                }
+                binding.titleEditText.setText(data.title)
+                binding.nameEditText.setText(data.name)
+                binding.surnameEditText.setText(data.surname)
+                binding.birthdayEditText.setText(data.birthday)
+                binding.usernameEditText.setText(data.username)
+                binding.passwordEditText.setText(data.password)
+                binding.emailEditText.setText(data.email)
+                binding.phoneEditText.setText(data.phone)
+                binding.recoveryEmailEditText.setText(data.recoveryEmail)
+                binding.recoveryPhoneEditText.setText(data.recoveryPhone)
+                binding.securityQuestionEditText.setText(data.securityQuestion)
+                binding.securityQuestionAnswerEditText.setText(data.securityQuestionAnswer)
+                binding.addressEditText.setText(data.address)
+                binding.otherEditText.setText(data.other)
+
+
+                iconAdapter.setPosition(selectedIconPosition)
+            }
+        }
     }
 
     private fun addCategoryDialog() {
         if (addCategoryDialog == null) {
-            addCategoryDialog = Dialog(this@AddAccountActivity, R.style.WideDialog)
+            addCategoryDialog = Dialog(this@EditAccountActivity, R.style.WideDialog)
             addCategoryDialog?.window?.setBackgroundDrawableResource(R.color.transparent)
             addCategoryDialog?.window?.attributes?.windowAnimations = R.style.DialogZoomAnimation
             addCategoryDialog?.setContentView(R.layout.add_category_dialog)
@@ -434,7 +477,7 @@ class AddAccountActivity : AppCompatActivity() {
     private fun dateFormatPatternDialog() {
         if (dateFormatPatternDialog == null) {
             selectedPatternPosition = -1
-            dateFormatPatternDialog = Dialog(this@AddAccountActivity, R.style.WideDialog)
+            dateFormatPatternDialog = Dialog(this@EditAccountActivity, R.style.WideDialog)
             dateFormatPatternDialog?.window?.setBackgroundDrawableResource(R.color.transparent)
             dateFormatPatternDialog?.window?.attributes?.windowAnimations =
                 R.style.DialogZoomAnimation
@@ -472,7 +515,7 @@ class AddAccountActivity : AppCompatActivity() {
 
             autoComplete?.setAdapter(
                 ArrayAdapter(
-                    this@AddAccountActivity,
+                    this@EditAccountActivity,
                     android.R.layout.simple_dropdown_item_1line,
                     datePatternTitles
                 )

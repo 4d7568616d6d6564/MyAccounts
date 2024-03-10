@@ -4,10 +4,12 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.mkdevelopment.myaccounts.R
+import com.mkdevelopment.myaccounts.activity.AddAccountActivity
+import com.mkdevelopment.myaccounts.activity.EditAccountActivity
+import com.mkdevelopment.myaccounts.common.IconHelper
 import com.mkdevelopment.myaccounts.database.AccountEntity
 import com.mkdevelopment.myaccounts.databinding.MainItemBinding
 import com.mkdevelopment.myaccounts.viewmodel.AccountDataViewModel
@@ -78,7 +83,8 @@ class AccountAdapter(
             val hiddenPassword = "*".repeat(passwordLength)
             holder.binding.textPassword.text = hiddenPassword
         }
-        holder.binding.imageView.setImageResource(currentItem.icon)
+        val iconResourceId = IconHelper.getIconByPosition(currentItem.iconPosition)
+        holder.binding.imageView.setImageResource(iconResourceId)
     }
 
 
@@ -174,9 +180,15 @@ class AccountAdapter(
             messageList.add(activity.getString(R.string.other_informations_copy_message))
         }
 
+
+        titleList.add(activity.getString(R.string.edit_account))
+        dataList.add("edit_item")
+        messageList.add("")
+
+
         titleList.add(activity.getString(R.string.delete_account))
         dataList.add("delete_item")
-        messageList.add(activity.getString(R.string.delete_account_message))
+        messageList.add("")
 
 
         val elevation = activity.resources.getDimension(R.dimen._3sdp).toInt()
@@ -235,25 +247,47 @@ class AccountAdapter(
                 val listItem = titleList[position]
                 val viewHolder = holder as ViewHolder
 
-                if (listItem == activity.getString(R.string.delete_account)) {
-                    viewHolder.textView.setTextColor(
-                        ContextCompat.getColor(
-                            mainItem.context,
-                            R.color.dialog_on_container_urgent
+                when (listItem) {
+                    activity.getString(R.string.edit_account) -> {
+                        viewHolder.textView.setTextColor(
+                            ContextCompat.getColor(
+                                mainItem.context,
+                                R.color.dialog_button_background
+                            )
                         )
-                    )
-                } else {
-                    viewHolder.textView.setTextColor(
-                        ContextCompat.getColor(
-                            mainItem.context,
-                            R.color.dialog_on_container
+                    }
+
+                    activity.getString(R.string.delete_account) -> {
+                        viewHolder.textView.setTextColor(
+                            ContextCompat.getColor(
+                                mainItem.context,
+                                R.color.dialog_on_container_urgent
+                            )
                         )
-                    )
+                    }
+
+                    else -> {
+                        viewHolder.textView.setTextColor(
+                            ContextCompat.getColor(
+                                mainItem.context,
+                                R.color.dialog_on_container
+                            )
+                        )
+                    }
                 }
                 viewHolder.textView.text = listItem
 
                 holder.itemView.setOnClickListener {
-                    if (dataList[position] == "delete_item") {
+                    if (dataList[position] == "edit_item") {
+                        val intent = Intent(activity, EditAccountActivity::class.java)
+                        intent.putExtra("account_id", currentItem.id)
+                        val options = ActivityOptions.makeCustomAnimation(
+                            activity,
+                            R.anim.from_right,
+                            R.anim.to_left
+                        )
+                        activity.startActivity(intent, options.toBundle())
+                    } else if (dataList[position] == "delete_item") {
                         deleteDialog(currentItem, mainItem)
                     } else {
                         Toast.makeText(activity, messageList[position], Toast.LENGTH_SHORT).show()
