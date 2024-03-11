@@ -9,60 +9,74 @@ import com.mkdevelopment.myaccounts.database.AccountsDatabase
 import com.mkdevelopment.myaccounts.repository.AccountRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AccountDataViewModel(application: Application) : AndroidViewModel(application) {
     private val accountDao = AccountsDatabase.getDatabase(application).accountDao()
-    private val repository: AccountRepository = AccountRepository(accountDao)
 
-    fun getDataByID(accountId: Int): LiveData<AccountEntity> {
-        return accountDao.getDataById(accountId)
+    suspend fun getDataByID(accountId: Int): List<AccountEntity> {
+        return withContext(Dispatchers.IO) {
+            accountDao.getDataById(accountId)
+        }
     }
 
+
     fun getAllDataByIdASC(selectedCategoryId: Int): LiveData<List<AccountEntity>> {
-        return repository.getAllDataByIdASC(selectedCategoryId)
+        return accountDao.getAllDataByIdASC(selectedCategoryId)
     }
 
     fun getAllDataByIdDESC(selectedCategoryId: Int): LiveData<List<AccountEntity>> {
-        return repository.getAllDataByIdDESC(selectedCategoryId)
+        return accountDao.getAllDataByIdDESC(selectedCategoryId)
     }
 
     fun getAllDataByTitleASC(selectedCategoryId: Int): LiveData<List<AccountEntity>> {
-        return repository.getAllDataByTitleASC(selectedCategoryId)
+        return accountDao.getAllDataByTitleASC(selectedCategoryId)
     }
 
     fun getAllDataByTitleDESC(selectedCategoryId: Int): LiveData<List<AccountEntity>> {
-        return repository.getAllDataByTitleDESC(selectedCategoryId)
+        return accountDao.getAllDataByTitleDESC(selectedCategoryId)
     }
 
     fun getTotalAccountCount(): LiveData<Int> {
-        return repository.getTotalAccountCount()
+        return accountDao.getTotalCount()
     }
+
+    fun updateAccountsCategory(oldCategoryId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val accounts = accountDao.getAccountsByCategoryId(oldCategoryId)
+            for (account in accounts) {
+                account.categoryId = 0
+                accountDao.updateData(account)
+            }
+        }
+    }
+
 
     fun insertData(accountEntity: AccountEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertData(accountEntity)
+            accountDao.insertData(accountEntity)
         }
     }
 
     fun updateData(accountEntity: AccountEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateData(accountEntity)
+            accountDao.updateData(accountEntity)
         }
     }
 
     fun deleteData(accountEntity: AccountEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteData(accountEntity)
+            accountDao.deleteData(accountEntity)
         }
     }
 
     fun deleteAllData() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllData()
+            accountDao.deleteAllData()
         }
     }
 
     fun searchDatabase(searchQuery: String): LiveData<List<AccountEntity>> {
-        return repository.searchDatabase(searchQuery)
+        return accountDao.searchDatabase(searchQuery)
     }
 }

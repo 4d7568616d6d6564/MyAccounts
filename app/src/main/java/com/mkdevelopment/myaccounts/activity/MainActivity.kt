@@ -379,6 +379,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             yesButton?.setOnClickListener {
+                accountDataViewModel.updateAccountsCategory(category.id)
+
                 categoryDataViewModel.deleteData(category)
                 categoryAdapter.notifyDataSetChanged()
                 selectedPopupItem = 0

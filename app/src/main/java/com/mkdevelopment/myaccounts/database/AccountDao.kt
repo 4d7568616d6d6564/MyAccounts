@@ -29,8 +29,10 @@ interface AccountDao {
     fun getAllDataByAddedTimeDESC(): LiveData<List<AccountEntity>>
 
     @Query("SELECT * FROM account_table WHERE id = :id")
-    fun getDataById(id: Int): LiveData<AccountEntity>
+    suspend fun getDataById(id: Int): List<AccountEntity>
 
+    @Query("SELECT * FROM account_table WHERE categoryId = :categoryId")
+    suspend fun getAccountsByCategoryId(categoryId:  Int): List<AccountEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertData(accountEntity: AccountEntity)
@@ -40,6 +42,10 @@ interface AccountDao {
 
     @Delete
     suspend fun deleteData(accountEntity: AccountEntity)
+
+    @Query("UPDATE account_table SET categoryId = :newCategoryId WHERE categoryId = :oldCategoryId")
+    suspend fun updateCategoryId(oldCategoryId: Int, newCategoryId: Int)
+
 
     @Query("SELECT COUNT(*) FROM account_table")
     fun getTotalCount(): LiveData<Int>

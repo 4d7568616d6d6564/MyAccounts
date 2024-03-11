@@ -5,7 +5,7 @@ import com.mkdevelopment.myaccounts.database.AccountDao
 import com.mkdevelopment.myaccounts.database.AccountEntity
 
 class AccountRepository(private val accountDao: AccountDao) {
-    fun getDataByID(accountId: Int): LiveData<AccountEntity> {
+    suspend fun getDataByID(accountId: Int): List<AccountEntity> {
         return accountDao.getDataById(accountId)
     }
 
@@ -27,6 +27,10 @@ class AccountRepository(private val accountDao: AccountDao) {
 
     fun getTotalAccountCount(): LiveData<Int> {
         return accountDao.getTotalCount()
+    }
+
+    suspend fun getAccountsByCategoryId(categoryId: Int): List<AccountEntity> {
+        return accountDao.getAccountsByCategoryId(categoryId)
     }
 
     suspend fun insertData(accountEntity: AccountEntity) {

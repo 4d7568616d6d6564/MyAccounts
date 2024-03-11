@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -102,7 +103,7 @@ class EditAccountActivity : AppCompatActivity() {
 
 
         if (binding.titleEditText.text?.isEmpty() == true) {
-            ShakeAnimatorHelper(binding.titleLayout, 500).startAnimation()
+            ShakeAnimatorHelper(applicationContext,binding.titleLayout, 500).startAnimation()
             binding.titleLayout.isErrorEnabled = true
             binding.titleLayout.error = getString(R.string.warning_title)
             binding.nestedScrollView.smoothScrollTo(0, 0, 200)
@@ -333,34 +334,42 @@ class EditAccountActivity : AppCompatActivity() {
             binding.passwordEditText.setSelection(selectionStart, selectionEnd)
         }
 
-        accountDataViewModel.getDataByID(accountId).observe(this) { data ->
-            addedTime = data.addedTime
-            selectedCategoryPosition = data.categoryId
-            selectedIconPosition = data.iconPosition
-            selectedGender = data.gender
-            runOnUiThread {
-                if (data.gender == "male") {
-                    binding.male.performClick()
-                } else {
-                    binding.female.performClick()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val dataList = accountDataViewModel.getDataByID(accountId)
+            if (dataList.isNotEmpty()) {
+                val data = dataList[0]
+                withContext(Dispatchers.Main) {
+                    addedTime = data.addedTime
+                    selectedCategoryPosition = data.categoryId
+                    selectedIconPosition = data.iconPosition
+                    selectedGender = data.gender
+                    runOnUiThread {
+                        binding.titleEditText.setText(data.title)
+                        binding.nameEditText.setText(data.name)
+                        binding.surnameEditText.setText(data.surname)
+                        binding.birthdayEditText.setText(data.birthday)
+                        binding.usernameEditText.setText(data.username)
+                        binding.passwordEditText.setText(data.password)
+                        binding.emailEditText.setText(data.email)
+                        binding.phoneEditText.setText(data.phone)
+                        binding.recoveryEmailEditText.setText(data.recoveryEmail)
+                        binding.recoveryPhoneEditText.setText(data.recoveryPhone)
+                        binding.securityQuestionEditText.setText(data.securityQuestion)
+                        binding.securityQuestionAnswerEditText.setText(data.securityQuestionAnswer)
+                        binding.addressEditText.setText(data.address)
+                        binding.otherEditText.setText(data.other)
+
+                        iconAdapter.setPosition(selectedIconPosition)
+
+                        binding.categoryAutoComplete.setText(categoryList[data.categoryId])
+
+                        if (data.gender == "male") {
+                            binding.male.performClick()
+                        } else if (data.gender == "female") {
+                            binding.female.performClick()
+                        }
+                    }
                 }
-                binding.titleEditText.setText(data.title)
-                binding.nameEditText.setText(data.name)
-                binding.surnameEditText.setText(data.surname)
-                binding.birthdayEditText.setText(data.birthday)
-                binding.usernameEditText.setText(data.username)
-                binding.passwordEditText.setText(data.password)
-                binding.emailEditText.setText(data.email)
-                binding.phoneEditText.setText(data.phone)
-                binding.recoveryEmailEditText.setText(data.recoveryEmail)
-                binding.recoveryPhoneEditText.setText(data.recoveryPhone)
-                binding.securityQuestionEditText.setText(data.securityQuestion)
-                binding.securityQuestionAnswerEditText.setText(data.securityQuestionAnswer)
-                binding.addressEditText.setText(data.address)
-                binding.otherEditText.setText(data.other)
-
-
-                iconAdapter.setPosition(selectedIconPosition)
             }
         }
     }
@@ -411,7 +420,7 @@ class EditAccountActivity : AppCompatActivity() {
 
                 if (categoryEditText?.text?.isEmpty() == true) {
                     if (categoryLayout != null) {
-                        ShakeAnimatorHelper(categoryLayout, 500).startAnimation()
+                        ShakeAnimatorHelper(applicationContext,categoryLayout, 500).startAnimation()
                         categoryLayout.isErrorEnabled = true
                         categoryLayout.error = getString(R.string.warning_category)
                     }
@@ -427,7 +436,7 @@ class EditAccountActivity : AppCompatActivity() {
                     val getCategory = categoryEditText?.text.toString().trim()
                     if (getCategory == getString(R.string.all_items)) {
                         if (categoryLayout != null) {
-                            ShakeAnimatorHelper(categoryLayout, 500).startAnimation()
+                            ShakeAnimatorHelper(applicationContext,categoryLayout, 500).startAnimation()
                             categoryLayout.isErrorEnabled = true
                             categoryLayout.error = getString(R.string.warning_exist_category)
                         }
@@ -441,7 +450,7 @@ class EditAccountActivity : AppCompatActivity() {
                             if (categoryExists) {
                                 withContext(Dispatchers.Main) {
                                     if (categoryLayout != null) {
-                                        ShakeAnimatorHelper(categoryLayout, 500).startAnimation()
+                                        ShakeAnimatorHelper(applicationContext,categoryLayout, 500).startAnimation()
                                         categoryLayout.isErrorEnabled = true
                                         categoryLayout.error =
                                             getString(R.string.warning_exist_category)
@@ -536,7 +545,7 @@ class EditAccountActivity : AppCompatActivity() {
 
                 if (autoComplete?.text?.isEmpty() == true) {
                     if (inputLayout != null) {
-                        ShakeAnimatorHelper(inputLayout, 500).startAnimation()
+                        ShakeAnimatorHelper(applicationContext,inputLayout, 500).startAnimation()
                         inputLayout.isErrorEnabled = true
                         inputLayout.error = getString(R.string.pattern_warning)
                     }
@@ -559,7 +568,7 @@ class EditAccountActivity : AppCompatActivity() {
         return dp * resources.displayMetrics.density
     }
 
-
+    @Suppress("DEPRECATION")
     override fun finish() {
         super.finish()
         overridePendingTransition(

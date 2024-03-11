@@ -94,7 +94,7 @@ class AddAccountActivity : AppCompatActivity() {
 
 
         if (binding.titleEditText.text?.isEmpty() == true) {
-            ShakeAnimatorHelper(binding.titleLayout, 500).startAnimation()
+            ShakeAnimatorHelper(applicationContext, binding.titleLayout, 500).startAnimation()
             binding.titleLayout.isErrorEnabled = true
             binding.titleLayout.error = getString(R.string.warning_title)
             binding.nestedScrollView.smoothScrollTo(0, 0, 200)
@@ -368,7 +368,11 @@ class AddAccountActivity : AppCompatActivity() {
 
                 if (categoryEditText?.text?.isEmpty() == true) {
                     if (categoryLayout != null) {
-                        ShakeAnimatorHelper(categoryLayout, 500).startAnimation()
+                        ShakeAnimatorHelper(
+                            applicationContext,
+                            categoryLayout,
+                            500
+                        ).startAnimation()
                         categoryLayout.isErrorEnabled = true
                         categoryLayout.error = getString(R.string.warning_category)
                     }
@@ -384,7 +388,11 @@ class AddAccountActivity : AppCompatActivity() {
                     val getCategory = categoryEditText?.text.toString().trim()
                     if (getCategory == getString(R.string.all_items)) {
                         if (categoryLayout != null) {
-                            ShakeAnimatorHelper(categoryLayout, 500).startAnimation()
+                            ShakeAnimatorHelper(
+                                applicationContext,
+                                categoryLayout,
+                                500
+                            ).startAnimation()
                             categoryLayout.isErrorEnabled = true
                             categoryLayout.error = getString(R.string.warning_exist_category)
                         }
@@ -398,7 +406,11 @@ class AddAccountActivity : AppCompatActivity() {
                             if (categoryExists) {
                                 withContext(Dispatchers.Main) {
                                     if (categoryLayout != null) {
-                                        ShakeAnimatorHelper(categoryLayout, 500).startAnimation()
+                                        ShakeAnimatorHelper(
+                                            applicationContext,
+                                            categoryLayout,
+                                            500
+                                        ).startAnimation()
                                         categoryLayout.isErrorEnabled = true
                                         categoryLayout.error =
                                             getString(R.string.warning_exist_category)
@@ -493,7 +505,7 @@ class AddAccountActivity : AppCompatActivity() {
 
                 if (autoComplete?.text?.isEmpty() == true) {
                     if (inputLayout != null) {
-                        ShakeAnimatorHelper(inputLayout, 500).startAnimation()
+                        ShakeAnimatorHelper(applicationContext, inputLayout, 500).startAnimation()
                         inputLayout.isErrorEnabled = true
                         inputLayout.error = getString(R.string.pattern_warning)
                     }
@@ -516,7 +528,7 @@ class AddAccountActivity : AppCompatActivity() {
         return dp * resources.displayMetrics.density
     }
 
-
+    @Suppress("DEPRECATION")
     override fun finish() {
         super.finish()
         overridePendingTransition(

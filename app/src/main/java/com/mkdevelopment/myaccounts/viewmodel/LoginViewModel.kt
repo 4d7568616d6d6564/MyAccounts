@@ -12,6 +12,7 @@ import com.mkdevelopment.myaccounts.R
 import com.mkdevelopment.myaccounts.common.PinIndicatorCount
 import com.mkdevelopment.myaccounts.utils.ShakeAnimatorHelper
 import com.mkdevelopment.myaccounts.utils.SharedPreferencesHelper
+import com.mkdevelopment.myaccounts.utils.VibratorHelper
 import com.mkdevelopment.myaccounts.view.IndicatorView
 import com.mkdevelopment.myaccounts.view.PinNumpadView
 
@@ -73,7 +74,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             defaultRemainingTimeV1
                         )
                         handleCountDown(pinNumpadView, textDesc, textTime)
-                        ShakeAnimatorHelper(pinNumpadView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), pinNumpadView, 500).startAnimation()
                         handler.postDelayed({
                             pinNumpadView.clearPinBuilder()
                             indicatorView.clearIndicators()
@@ -87,7 +88,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             defaultRemainingTimeV2
                         )
                         handleCountDown(pinNumpadView, textDesc, textTime)
-                        ShakeAnimatorHelper(pinNumpadView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), pinNumpadView, 500).startAnimation()
                         handler.postDelayed({
                             pinNumpadView.clearPinBuilder()
                             indicatorView.clearIndicators()
@@ -101,7 +102,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             defaultRemainingTimeV3
                         )
                         handleCountDown(pinNumpadView, textDesc, textTime)
-                        ShakeAnimatorHelper(pinNumpadView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), pinNumpadView, 500).startAnimation()
                         handler.postDelayed({
                             pinNumpadView.clearPinBuilder()
                             indicatorView.clearIndicators()
@@ -115,7 +116,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             defaultRemainingTimeV4
                         )
                         handleCountDown(pinNumpadView, textDesc, textTime)
-                        ShakeAnimatorHelper(pinNumpadView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), pinNumpadView, 500).startAnimation()
                         handler.postDelayed({
                             pinNumpadView.clearPinBuilder()
                             indicatorView.clearIndicators()
@@ -129,7 +130,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             defaultRemainingTimeV5
                         )
                         handleCountDown(pinNumpadView, textDesc, textTime)
-                        ShakeAnimatorHelper(pinNumpadView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), pinNumpadView, 500).startAnimation()
                         handler.postDelayed({
                             pinNumpadView.clearPinBuilder()
                             indicatorView.clearIndicators()
@@ -143,7 +144,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             defaultRemainingTimeV6
                         )
                         handleCountDown(pinNumpadView, textDesc, textTime)
-                        ShakeAnimatorHelper(pinNumpadView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), pinNumpadView, 500).startAnimation()
                         handler.postDelayed({
                             pinNumpadView.clearPinBuilder()
                             indicatorView.clearIndicators()
@@ -153,7 +154,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         SharedPreferencesHelper(getApplication()).setRetryCount(++count)
                     } else {
                         SharedPreferencesHelper(getApplication()).setRetryCount(++count)
-                        ShakeAnimatorHelper(indicatorView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), indicatorView, 500).startAnimation()
                         handler.postDelayed({
                             pinNumpadView.clearPinBuilder()
                             indicatorView.clearIndicators()
@@ -197,7 +198,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         showToast(getApplication<Application>().getString(R.string.account_created_successfully))
                         callback.onPinResult(true)
                     } else {
-                        ShakeAnimatorHelper(indicatorView, 500).startAnimation()
+                        ShakeAnimatorHelper(getApplication(), indicatorView, 500).startAnimation()
                         textDesc.text =
                             getApplication<Application>().getString(R.string.passwords_do_not_match)
                         previousPassword = ""

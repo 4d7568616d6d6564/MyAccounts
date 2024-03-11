@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val categoryId: Int = -1,
+    var categoryId: Int = -1,
     val title: String = "",
     val name: String = "",
     val surname: String = "",
